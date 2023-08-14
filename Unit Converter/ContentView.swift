@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedConversion = "Temperature"
+    @FocusState private var amountIsFocused: Bool
     
     let conversions = ["Temperature", "Length", "Time", "Volume"]
     
@@ -86,6 +87,9 @@ struct ContentView: View {
                                     value: $temperatureInput,
                                     format: .number
                                 )
+                                .keyboardType(.decimalPad)
+                                .focused($amountIsFocused)
+                                
                                 Picker("", selection: $temperatureFromUnit) {
                                     ForEach(temperatureConversions, id: \.self) {
                                         Text($0.symbol)
@@ -121,6 +125,9 @@ struct ContentView: View {
                                     value: $lengthInput,
                                     format: .number
                                 )
+                                .keyboardType(.decimalPad)
+                                .focused($amountIsFocused)
+                                
                                 Picker("", selection: $lengthFromUnit) {
                                     ForEach(lengthConversions, id: \.self) {
                                         Text($0.symbol)
@@ -154,6 +161,9 @@ struct ContentView: View {
                                     value: $timeInput,
                                     format: .number
                                 )
+                                .keyboardType(.decimalPad)
+                                .focused($amountIsFocused)
+                                
                                 Picker("", selection: $timeFromUnit) {
                                     ForEach(timeConversions, id: \.self) {
                                         Text($0.symbol)
@@ -187,6 +197,9 @@ struct ContentView: View {
                                     value: $volumeInput,
                                     format: .number
                                 )
+                                .keyboardType(.decimalPad)
+                                .focused($amountIsFocused)
+                                
                                 Picker("", selection: $volumeFromUnit) {
                                     ForEach(volumeConversions, id: \.self) {
                                         Text($0.symbol)
@@ -221,6 +234,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Unit Converter")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        amountIsFocused = false
+                    }
+                }
+            }
         }
     }
 }
